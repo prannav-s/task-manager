@@ -18,6 +18,10 @@ body {
   flex-direction: column;
 }
 
+.deadline {
+  font-weight: bold;
+}
+
 .button-container .button {
   width: 100%;
 }

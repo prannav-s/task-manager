@@ -12,7 +12,7 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=lambda: datetime.now(ZoneInfo("America/New_York")))
-    color = db.Column(db.String(200), default = "white", nullable=False)
+    color = db.Column(db.String(200), default = "lightblue", nullable=False)
     deadline = db.Column(db.DateTime)
     status = db.Column(db.String(50), nullable=False)
 

@@ -25,15 +25,15 @@
                     </td>
                     <td>{{ task.content }}</td>
                     {% if task.deadline|due_soon(0.25) %}
-                        {% set color = 'red' %}
+                        {% set color = 'tomato' %}
                     {% elif task.deadline|due_soon(1) %}
                         {% set color = 'orange' %}
                     {% elif task.deadline|due_soon(2) %}
-                        {% set color = 'yellow' %}
+                        {% set color = '#FAE033' %}
                     {% else %}
-                        {% set color = 'green' %}
+                        {% set color = 'MediumSeaGreen' %}
                     {% endif %}
-                    <td><span style="color: black; background-color: {{color}};">{{ task.deadline.strftime("%I:%M %p") }}, {{ task.deadline.strftime("%b %d %Y") }}</span></td>
+                    <td class="deadline"><span style="background-color: {{color}};">{{ task.deadline.strftime("%I:%M %p") }}, {{ task.deadline.strftime("%b %d %Y") }}</span></td>
                     <td>{{ task.date_created.strftime("%I:%M %p") }}, {{ task.date_created.strftime("%b %d %Y") }}</td>
                     <td class = "button-container">
                         <form action="{{ url_for('complete', id=task.id) }}" method="POST" style="display:inline;">
