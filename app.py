@@ -83,7 +83,7 @@ def update(id):
 def change_color(id):
     task_to_update = Todo.query.get_or_404(id)
     if request.method == 'POST':
-        task_to_update.color = request.form['color'].lower().replace(" ", "")
+        task_to_update.color = request.form['color-' + str(id)]
 
         try:
             db.session.commit()

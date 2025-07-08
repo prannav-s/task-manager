@@ -70,8 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!popup) return console.error('popup-input missing:', id);
 
         popup.style.display = 'table-row';
-        const input = popup.querySelector(`#color-${id}`);
-        if (input) input.focus();
       });
     });
 

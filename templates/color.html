@@ -1,12 +1,29 @@
+
 <div id="popup-input-{{ task.id }}" class="color" style="display: none;">
   <form action="/change-color/{{ task.id }}" method="POST">
-    <input
-      type="text"
-      name="color"
-      id="color-{{ task.id }}"
-      value="{{ task.color }}"
-      style="width: 10vw;"
-    >
-    <input type="submit" value="Update">
+    {% import 'selectize.html' as select %}
+    {{ select.js() }}
+    {{ select.dropdown(
+      name = 'color-' ~ task.id,
+      options = [
+        {'value': 'tomato', 'label': 'Red'},
+        {'value': 'orange', 'label': 'Orange'},
+        {'value': 'gold', 'label': 'Yellow'},
+        {'value': 'MediumSeaGreen', 'label': 'Green'},
+        {'value': 'lightblue', 'label': 'Blue'},
+        {'value': 'slateblue', 'label': 'Purple'}
+    ],
+    selected = task.color
+    ) }}
   </form>
 </div>
+
+<script>
+  $(function(){
+  $('#color-{{ task.id }}').on('change', function(){
+    const choice = $(this).val();
+    console.log('selected:', choice);
+    $(this).closest('form').submit();
+  });
+});
+</script>
