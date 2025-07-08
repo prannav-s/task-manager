@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Task Master</title>
+{% endblock %}
+
+{% block body %}
+<div class = "content">
+    <h1>Task Master</h1>
+    {% if tasks|length < 1 %}
+        <h4> There are no tasks. Create one below</h4>
+    {% else %}
+        <table>
+            <tr>
+                <th></th>
+                <th>Task</th>
+                <th>Deadline</th>
+                <th>Added</th>
+                <th>Actions</th>
+            </tr>
+            {% for task in tasks %}
+                <tr>
+                    <td class="color-input" data-id="{{ task.id }}" style="background-color: {{task.color}};">
+                        {% include 'color.html' %}
+                    </td>
+                    <td>{{ task.content }}</td>
+                    {% if task.deadline|due_soon(0.25) %}
+                        {% set color = 'red' %}
+                    {% elif task.deadline|due_soon(1) %}
+                        {% set color = 'orange' %}
+                    {% elif task.deadline|due_soon(2) %}
+                        {% set color = 'yellow' %}
+                    {% else %}
+                        {% set color = 'green' %}
+                    {% endif %}
+                    <td><span style="color: black; background-color: {{color}};">{{ task.deadline.strftime("%I:%M %p") }}, {{ task.deadline.strftime("%b %d %Y") }}</span></td>
+                    <td>{{ task.date_created.strftime("%I:%M %p") }}, {{ task.date_created.strftime("%b %d %Y") }}</td>
+                    <td class = "button-container">
+                        <form action="{{ url_for('complete', id=task.id) }}" method="POST" style="display:inline;">
+                            <button class = "button" type="submit">Complete</button>
+                        </form>
+                        <a class = "button" href="/update/{{task.id}}">Update</a>
+                        <!-- <a class = "button" href = "/change-color/{{task.id}}">Color</a> -->
+                        <form action="{{ url_for('delete', id=task.id) }}" method="POST" style="display:inline;">
+                            <button class = "button" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <form action="/" method="POST">
+        <input type="text" name = "content" id = "content" required>
+        <input type="datetime-local" id="when" name="when" required>
+        <input type="submit" value = "Add task">
+    </form>
+    <a class = "button" href = "{{ url_for('completed')}}">View Completed</a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.color-input')
+    .forEach(td => {
+      td.addEventListener('click', () => {
+        const id    = td.dataset.id;
+        const popup = document.getElementById(`popup-input-${id}`);
+        if (!popup) return console.error('popup-input missing:', id);
+
+        popup.style.display = 'table-row';
+        const input = popup.querySelector(`#color-${id}`);
+        if (input) input.focus();
+      });
+    });
+
+  // your existing date-min code…
+  const el  = document.getElementById('when');
+  const now = new Date(), pad = n => String(n).padStart(2, '0');
+  el.min = [
+    now.getFullYear(),
+    pad(now.getMonth() + 1),
+    pad(now.getDate())
+  ].join('-') + 'T' +
+  [pad(now.getHours()), pad(now.getMinutes())].join(':');
+});
+</script>
+{% endblock %}
+

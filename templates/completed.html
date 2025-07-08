@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Task Master</title>
+{% endblock %}
+
+{% block body %}
+<div class = "content">
+    <h1>Completed Tasks</h1>
+    {% if tasks|length < 1 %}
+        <h4> No completed tasks, try finishing one!</h4>
+    {% else %}
+        <table>
+            <tr>
+                <th>Task</th>
+                <th>Completed</th>
+            </tr>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.content }}</td>
+                    <td>{{ task.date_created.strftime("%I:%M %p") }}, {{ task.date_created.strftime("%b %d %Y") }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    <a class = "button" href = "{{ url_for('index')}}">Back</a>
+</div>
+{% endblock %}

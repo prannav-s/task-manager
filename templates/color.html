@@ -1,0 +1,12 @@
+<div id="popup-input-{{ task.id }}" class="color" style="display: none;">
+  <form action="/change-color/{{ task.id }}" method="POST">
+    <input
+      type="text"
+      name="color"
+      id="color-{{ task.id }}"
+      value="{{ task.color }}"
+      style="width: 10vw;"
+    >
+    <input type="submit" value="Update">
+  </form>
+</div>
