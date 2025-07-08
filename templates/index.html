@@ -35,15 +35,17 @@
                     {% endif %}
                     <td class="deadline"><span style="background-color: {{color}};">{{ task.deadline.strftime("%I:%M %p") }}, {{ task.deadline.strftime("%b %d %Y") }}</span></td>
                     <td>{{ task.date_created.strftime("%I:%M %p") }}, {{ task.date_created.strftime("%b %d %Y") }}</td>
-                    <td class = "button-container">
-                        <form action="{{ url_for('complete', id=task.id) }}" method="POST" style="display:inline;">
-                            <button class = "button" type="submit">Complete</button>
-                        </form>
-                        <a class = "button" href="/update/{{task.id}}">Update</a>
-                        <!-- <a class = "button" href = "/change-color/{{task.id}}">Color</a> -->
-                        <form action="{{ url_for('delete', id=task.id) }}" method="POST" style="display:inline;">
-                            <button class = "button" type="submit">Delete</button>
-                        </form>
+                    <td >
+                        <div class = "button-container">
+                            <form action="{{ url_for('complete', id=task.id) }}" method="POST" style="display:inline;">
+                                <button class = "button" type="submit">Complete</button>
+                            </form>
+                            <a class = "button" href="/update/{{task.id}}">Update</a>
+                            <!-- <a class = "button" href = "/change-color/{{task.id}}">Color</a> -->
+                            <form action="{{ url_for('delete', id=task.id) }}" method="POST" style="display:inline;">
+                                <button class = "button" type="submit">Delete</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
